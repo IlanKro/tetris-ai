@@ -3,7 +3,7 @@
 
 forked from: https://github.com/camilanovaes/tetris-ai
 all credit to the original author, made some changes for an AI assigment.
-mainly adding line countes and more readable UI.
+mainly adding line counts and more readable UI for the sake of the experiment.
 
 ## Screenshot
 <div style="text-align:center"><img src="fig/tetris.png" /></div>
