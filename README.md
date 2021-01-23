@@ -1,5 +1,10 @@
 # Tetris AI 
 
+
+forked from: https://github.com/camilanovaes/tetris-ai
+all credit to the original author, made some changes for an AI assigment.
+mainly adding line countes and more readable UI.
+
 ## Screenshot
 <div style="text-align:center"><img src="fig/tetris.png" /></div>
 
