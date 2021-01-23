@@ -16,7 +16,7 @@ def main(no_show_game):
     NUM_CHILD      = round(NUM_POP*GAP)
     MUTATION_RATE  = 0.2
     CROSSOVER_RATE = 0.75
-    MAX_SCORE      = 200000
+    MAX_SCORE      = 999999
 
     genetic_alg    = ga.GA(NUM_POP)
 
@@ -41,7 +41,7 @@ def main(no_show_game):
 
         for g in range(NUM_GEN):
             print (' \n')
-            print (f' - - - - Exp: {e}\t Geração: {g} - - - - ')
+            print (f' - - - - Exp: {e}\t generation: {g} - - - - ')
             print (' \n')
 
             # Save generation
@@ -105,7 +105,7 @@ if __name__ == "__main__":
         best_chromos = main(args.no_show)
         #FIXME:
         #chromo       = ga.Chromosome(best_chromos)
-        #ai.run_game(chromo, speed=500, max_score=200000, no_show=False)
+        #ai.run_game(chromo, speed=500, max_score=999999, no_show=False)
 
     elif (args.game):
         # Just run the base game
@@ -117,4 +117,4 @@ if __name__ == "__main__":
         # FIXME: Define the optimal weights
         optimal_weights = [-0.97, 5.47, -13.74, -0.73,  7.99, -0.86, -0.72]
         chromo = ga.Chromosome(optimal_weights)
-        ai.run_game(chromo, speed=600, max_score=200000, no_show=False)
+        ai.run_game(chromo, speed=600, max_score=999999, no_show=False)

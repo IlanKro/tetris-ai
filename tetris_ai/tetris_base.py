@@ -16,7 +16,7 @@ WINDOWWIDTH  = 650
 WINDOWHEIGHT = 690
 BOXSIZE      = 25
 BOARDWIDTH   = 10
-BOARDHEIGHT  = 25
+BOARDHEIGHT  = 20
 BLANK        = '.'
 XMARGIN      = int((WINDOWWIDTH - BOARDWIDTH * BOXSIZE) / 2)
 TOPMARGIN    = WINDOWHEIGHT - (BOARDHEIGHT * BOXSIZE) - 5
@@ -200,6 +200,7 @@ def run_game():
     moving_left        = False
     moving_right       = False
     score              = 0
+    lines_removed      = 0  # added by us
     level, fall_freq   = calc_level_and_fall_freq(score)
 
     falling_piece      = get_new_piece()
@@ -317,7 +318,7 @@ def run_game():
                 # Falling piece has landed, set it on the board
                 add_to_board(board, falling_piece)
                 num_removed_lines = remove_complete_lines(board)
-
+                lines_removed+= num_removed_lines #counting removed lines
                 # Bonus score for complete lines at once
                 # 40   pts for 1 line
                 # 120  pts for 2 lines
@@ -344,7 +345,7 @@ def run_game():
         # Drawing everything on the screen
         DISPLAYSURF.fill(BGCOLOR)
         draw_board(board)
-        draw_status(score, level)
+        draw_status(lines_removed,score, level)
         draw_next_piece(next_piece)
 
         if falling_piece != None:
@@ -576,15 +577,18 @@ def draw_board(board):
             draw_box(x, y, board[x][y])
 
 
-def draw_status(score, level):
+def draw_status(lines_removed,score, level):
     """Draw status"""
-
+    # Draw the lines text
+    lines_surf = BASICFONT.render('Lines: %s' % lines_removed, True, TEXTCOLOR)
+    lines_rect = lines_surf.get_rect()
+    lines_rect.topleft = (WINDOWWIDTH - 150, 80)
+    DISPLAYSURF.blit(lines_surf, lines_rect)
     # Draw the score text
     score_surf = BASICFONT.render('Score: %s' % score, True, TEXTCOLOR)
     score_rect = score_surf.get_rect()
-    score_rect.topleft = (WINDOWWIDTH - 150, 80)
+    score_rect.topleft = (WINDOWWIDTH - 150, 50)
     DISPLAYSURF.blit(score_surf, score_rect)
-
     # draw the level text
     levelSurf = BASICFONT.render('Level: %s' % level, True, TEXTCOLOR)
     levelRect = levelSurf.get_rect()

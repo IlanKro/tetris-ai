@@ -2,6 +2,7 @@ import pygame
 import random
 import numpy as np
 import copy
+import time
 import tetris_ai.tetris_base as game
 import tetris_ai.tetris_ai as ai
 
@@ -10,10 +11,12 @@ class Chromosome():
     def __init__(self, weights):
         self.weights = weights
         self.score   = 0
+        self.lines   = 0
 
     def calc_fitness(self, game_state):
         """Calculate fitness"""
         self.score = game_state[2]
+        self.lines = game_state[4]
 
     def calc_best_move(self, board, piece, show_game = False):
         """Calculate best movement
@@ -70,14 +73,17 @@ class GA:
             self.chromosomes.append(chrom)
 
             # Evaluate fitness
-            game_state = ai.run_game(self.chromosomes[i], 1000, 200000, True)
+            game_state = ai.run_game(self.chromosomes[i], 1000, 999999, True)
             self.chromosomes[i].calc_fitness(game_state)
 
     def __str__(self):
         for i, chromo in enumerate(self.chromosomes):
-            print(f"Inidividuo {i+1}")
-            print(f"   Weights: {chromo.weights}")
-            print(f"   Score: {chromo.score}")
+            print(f"End Time: {time.strftime('%I:%M:%S')}") #added time
+            print(f"Unit Num: {i+1}") #translated to english
+            print(f"Weights: {chromo.weights}")
+            print(f"Score: {chromo.score}")
+            print(f"Lines:{chromo.lines}")  #added          
+            print(f"----------------------------------------------------------------\n")
 
         return ''
 

@@ -13,6 +13,7 @@ def run_game(chromosome, speed, max_score = 20000, no_show = False):
     board            = game.get_blank_board()
     last_fall_time   = time.time()
     score            = 0
+    lines            = 0
     level, fall_freq = game.calc_level_and_fall_freq(score)
     falling_piece    = game.get_new_piece()
     next_piece       = game.get_new_piece()
@@ -56,14 +57,14 @@ def run_game(chromosome, speed, max_score = 20000, no_show = False):
         if no_show or time.time() - last_fall_time > fall_freq:
             if (not game.is_valid_position(board, falling_piece, adj_Y=1)):
                 # Falling piece has landed, set it on the board
-                game.add_to_board(board, falling_piece)
-
+                game.add_to_board(board, falling_piece)                
                 # Bonus score for complete lines at once
                 # 40   pts for 1 line
                 # 120  pts for 2 lines
                 # 300  pts for 3 lines
                 # 1200 pts for 4 lines
                 num_removed_lines = game.remove_complete_lines(board)
+                lines += num_removed_lines
                 if(num_removed_lines == 1):
                     score += 40
                     removed_lines[0] += 1
@@ -84,7 +85,7 @@ def run_game(chromosome, speed, max_score = 20000, no_show = False):
                 last_fall_time = time.time()
 
         if (not no_show):
-            draw_game_on_screen(board, score, level, next_piece, falling_piece,
+            draw_game_on_screen(board,lines, score, level, next_piece, falling_piece,
                                 chromosome)
 
         # Stop condition
@@ -93,16 +94,16 @@ def run_game(chromosome, speed, max_score = 20000, no_show = False):
             win   = True
 
     # Save the game state
-    game_state = [num_used_pieces, removed_lines, score, win]
+    game_state = [num_used_pieces, removed_lines, score, win,lines]
 
     return game_state
 
-def draw_game_on_screen(board, score, level, next_piece, falling_piece, chromosome):
+def draw_game_on_screen(board,lines, score, level, next_piece, falling_piece, chromosome):
     """Draw game on the screen"""
 
     game.DISPLAYSURF.fill(game.BGCOLOR)
     game.draw_board(board)
-    game.draw_status(score, level)
+    game.draw_status(lines,score, level)
     game.draw_next_piece(next_piece)
 
     if falling_piece != None:
