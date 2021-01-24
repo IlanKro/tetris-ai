@@ -1,0 +1,6 @@
+Média do melhor indivíduo: fitness = 31766.8
+Weights: []
+Média da média da população: fitness = 8286.560000000001
+Weights: []
+MDF: fitness = 0.4587133892477276
+Weights: []

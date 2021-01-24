@@ -7,6 +7,8 @@ class Analyser():
         self.data    = data
         self.best    = 0
         self.weights = []
+        self.best_lines=0
+        self.avg_lines=0
 
     def plot(self, type, show_mean=True, show_std=True,
              show_chromosomes=True, results=True, save=True):
@@ -18,17 +20,21 @@ class Analyser():
             show_chromosomes : Whether to show chromosomes
             save             : Whether to save
         """
-        plt_config = {"best": {"title": "Melhor indivíduo",
-                               "label": "Média do melhor indivíduo",
-                               "xlabel": "Gerações",
+        plt_config = {"best": {"title": "Best Unit",
+                               "label": "Average best unit",
+                               "xlabel": "Generations",
                                "ylabel": "Fitness"},
-                      "pop" : {"title": "Média da população",
-                               "label": "Média da média da população",
-                               "xlabel": "Gerações",
+                      "pop" : {"title": "Average of population",
+                               "label": "Population average",
+                               "xlabel": "Generations",
                                "ylabel": "Fitness"},
-                      "mdf" : {"title": "Medida de diversidade no fenótipo",
+                      "lines" : {"title": "Average of lines",
+                               "label": "lines average",
+                               "xlabel": "Generations",
+                               "ylabel": "Lines"},         
+                      "mdf" : {"title": "diversity measure in the phenotype",
                                "label": "MDF",
-                               "xlabel": "Gerações",
+                               "xlabel": "Generations",
                                "ylabel": "MDF"}}
 
         label  = plt_config[type]["label"]
@@ -46,10 +52,13 @@ class Analyser():
 
             for gen in exp:
                 fitness = [chrom.score for chrom in gen.chromosomes]
+                lines = [chrom.lines for chrom in gen.chromosomes]
                 if (type == "best"):
                     value = np.amax(fitness)
                 elif (type == "pop"):
                     value = np.mean(fitness)
+                elif (type == "lines"):
+                    value =  np.mean(lines)  
                 elif (type == "mdf"):
                     best  = np.amax(fitness)
                     pop   = np.mean(fitness)
@@ -94,7 +103,7 @@ class Analyser():
             if (show_std):
                 plt.fill_between(range(1,N_gen+1), mean-std, mean+std,
                                  linestyle='-', alpha = 0.4, color='black',
-                                 label='Desvio padrão')
+                                 label='Standard deviation')
             if (results):
                 result = np.amax(mean)
                 print(f"{label}: result = {result}")

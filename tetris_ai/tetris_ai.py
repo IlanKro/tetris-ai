@@ -5,7 +5,7 @@ import tetris_ai.tetris_base as game
 size   = [640, 480]
 screen = pygame.display.set_mode((size[0], size[1]))
 
-def run_game(chromosome, speed, max_score = 20000, no_show = False):
+def run_game(chromosome, speed, max_score = 999999, no_show = False):
 
     game.FPS = int(speed)
     game.main()

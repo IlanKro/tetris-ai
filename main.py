@@ -9,9 +9,9 @@ import pdb
 def main(no_show_game):
     # GENERAL CONFIG
     GAME_SPEED     = 600
-    NUM_GEN        = 100
-    NUM_POP        = 15
-    NUM_EXP        = 10
+    NUM_GEN        = 50 #was 100
+    NUM_POP        = 10 #was 15
+    NUM_EXP        = 5 #was 10
     GAP            = 0.3
     NUM_CHILD      = round(NUM_POP*GAP)
     MUTATION_RATE  = 0.2
@@ -80,6 +80,7 @@ def main(no_show_game):
     an.plot(type="best")
     an.plot(type="pop")
     an.plot(type="mdf", show_std=False)
+    an.plot(type="lines")
 
 
     #Return the best choromosome from all generation and experiments
